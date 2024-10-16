@@ -212,7 +212,7 @@ public class BigFraction {
 
     // Return the computed value
 
-    return new BigFraction(resultNumerator, resultDenominator);
+    return new BigFraction(resultNumerator, resultDenominator).simplify();
 
   } // add(BigFraction)
 
@@ -287,7 +287,7 @@ public class BigFraction {
 
     BigFraction result = new BigFraction(a.numerator().multiply(b.numerator()), a.denominator().multiply(b.denominator()));
 
-    return result;
+    return result.simplify();
 
   }//multiply
 
@@ -300,7 +300,7 @@ public class BigFraction {
 
                                           this.denominator());
 
-    return result;
+    return result.simplify();
 
   }
 
@@ -321,7 +321,7 @@ public class BigFraction {
 
       (this.num.multiply(substractVal.denom)).subtract(this.denom.multiply(subtractVal.num));
 
-     return new BigFraction(resultNumerator, resultDenominator);
+     return new BigFraction(resultNumerator, resultDenominator).simplify();
 
   }//subtract(val)
 
@@ -349,7 +349,7 @@ public class BigFraction {
     
     }//else
 
-    return multiplies(this, reciprocal);
+    return multiplies(this, reciprocal).simplify();
 
   }//divide()
 
@@ -360,7 +360,7 @@ public class BigFraction {
   public BigFraction simplify(){
 
      BigInteger remainder = BigInteger.valueOf(1);
-     
+
      BigInteger numhold = this.numerator();
 
      BigInteger denomhold = this.denominator();
