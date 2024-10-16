@@ -2,7 +2,6 @@ package edu.grinnell.csc207;
 
 
 import java.math.BigInteger;
-import java.text.Bidi;
 import edu.grinnell.csc207.BigFraction;
 
 
