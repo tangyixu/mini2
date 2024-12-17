@@ -1,0 +1,9 @@
+Changes:
+
+1) Completed the rest of the BFRegisterSet.java and the main classes.
+
+2) Fix BigFraction.java
+
+3) Fixed styles
+
+4) Added Test file.
