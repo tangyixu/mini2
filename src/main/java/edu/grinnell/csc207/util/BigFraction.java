@@ -109,28 +109,28 @@ public class BigFraction {
    *
    */
   public BigFraction(String str) {
-    BigInteger negatNum = BigInteger.valueOf(1);
-    BigInteger negatDenom = BigInteger.valueOf(1);
+    // BigInteger negatNum = BigInteger.valueOf(1);
+    // BigInteger negatDenom = BigInteger.valueOf(1);
     if (!str.contains("/")) {
       this.num = BigInteger.valueOf(Integer.parseInt(str));
       this.denom = BigInteger.valueOf(1);
-      if (str.contains("-")) {
-        negatNum = BigInteger.valueOf(-1);
-      } // if
+      // if (str.contains("-")) {
+      // negatNum = BigInteger.valueOf(-1);
+      // } // if
     } else {
-      if (str.contains("-")) {
-        if (str.indexOf('/') > str.indexOf('-')) {
-          negatNum = negatNum.negate();
-        } else {
-          negatDenom = negatDenom.negate();
-        } // if-else
-      } // if
+      // if (str.contains("-")) {
+      // if (str.indexOf('/') > str.indexOf('-')) {
+      // negatNum = negatNum.negate();
+      // } else {
+      // negatDenom = negatDenom.negate();
+      // } // if-else
+      // } // if
       this.num = BigInteger.valueOf(Integer.parseInt(str.substring(0, str.indexOf('/'))));
       this.denom =
           BigInteger.valueOf(Integer.parseInt(str.substring(str.indexOf('/') + 1, str.length())));
     } // if-else
-    this.num = this.num.multiply(negatNum);
-    this.denom = this.denom.multiply(negatDenom);
+    // this.num = this.num.multiply(negatNum);
+    // this.denom = this.denom.multiply(negatDenom);
     this.simplify();
   } // BigFraction (str)
 

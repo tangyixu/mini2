@@ -133,10 +133,14 @@ public class InteractiveCalculator {
           } // if
           previousOperator += "/";
           bc.divide(nextVal);
+        } else if (n == 0) {
+          bc.add(inputVal);
+          continue;
         } else {
-          if (n == 0) {
-            bc.add(inputVal);
-          } // if
+          pen.println("*** ERROR [Invalid expression] ***");
+          bc.clear();
+          command = eyes.nextLine();
+          break;
         } // if-else
       } // for
 
