@@ -76,7 +76,7 @@ public class BFCalculator {
   /**
    * Determine if the char is an operator.
    *
-   * @param ch
+   * @param str The string being examined.
    * @return true if it is an operator, otherwise return false.
    */
   public boolean isOperator(String str) {
@@ -104,5 +104,26 @@ public class BFCalculator {
     } // for
     return false;
   } // isOperator (char)
+
+  /**
+   * Process vals based on whether it is a register or not an operator and return
+   * the processed value.
+   *
+   * @param bc
+   * @param set
+   * @param val
+   * @return a BigFraction value of the String val.
+   */
+  public static BigFraction processVal(BFCalculator bc, BFRegisterSet set, String val) {
+    if (set.isValidReg(val)) {
+      BigFraction value = set.get(val.charAt(0));
+      return value;
+    } else if (!bc.isOperator(val)) {
+      BigFraction value = new BigFraction(val);
+      return value;
+    } else {
+      return new BigFraction();
+    } // if-else
+  } // processVal (BFCalculator, BFRegisterSet, String)
 
 } // BFCalculator Class

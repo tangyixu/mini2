@@ -1,16 +1,14 @@
 package edu.grinnell.csc207.util;
 
-
 import java.math.BigInteger;
-
 
 /**
  * A simple implementation of arbitrary-precision Fractions.
  *
  * @author Samuel A. Rebelsky
- * 
+ *
  * @author Tang Yulin, Tang Yixuan.
- * 
+ *
  */
 
 public class BigFraction {
@@ -21,25 +19,23 @@ public class BigFraction {
 
   // +------------------+
 
-
   /*
-   * 
+   *
    * (1) Denominators are always positive. Therefore, negative fractions
-   * 
+   *
    * are represented with a negative numerator. Similarly, if a fraction
-   * 
+   *
    * has a negative numerator, it is negative.
    *
-   * 
-   * 
+   *
+   *
    * (2) Fractions are not necessarily stored in simplified form. To
-   * 
+   *
    * obtain a fraction in simplified form, one must call the `simplify`
-   * 
+   *
    * method.
-   * 
+   *
    */
-
 
   // +-----------+---------------------------------------------------
 
@@ -47,16 +43,13 @@ public class BigFraction {
 
   // +-----------+
 
-
   /** The default numerator when creating fractions. */
 
   private static final BigInteger DEFAULT_NUMERATOR = BigInteger.valueOf(0);
 
-
   /** The default denominator when creating fractions. */
 
   private static final BigInteger DEFAULT_DENOMINATOR = BigInteger.valueOf(1);
-
 
   // +--------+-------------------------------------------------------
 
@@ -64,16 +57,13 @@ public class BigFraction {
 
   // +--------+
 
-
   /** The numerator of the fraction. Can be positive, zero or negative. */
 
   private BigInteger num;
 
-
   /** The denominator of the fraction. Must be non-negative. */
 
   private BigInteger denom;
-
 
   // +--------------+-------------------------------------------------
 
@@ -81,11 +71,10 @@ public class BigFraction {
 
   // +--------------+
 
-
   /**
    * Build a new fraction with numerator num and denominator denom.
    *
-   * @param numerator The numerator of the fraction.
+   * @param numerator   The numerator of the fraction.
    * @param denominator The denominator of the fraction.
    */
   public BigFraction(BigInteger numerator, BigInteger denominator) {
@@ -109,35 +98,21 @@ public class BigFraction {
    *
    */
   public BigFraction(String str) {
-    // BigInteger negatNum = BigInteger.valueOf(1);
-    // BigInteger negatDenom = BigInteger.valueOf(1);
     if (!str.contains("/")) {
       this.num = BigInteger.valueOf(Integer.parseInt(str));
       this.denom = BigInteger.valueOf(1);
-      // if (str.contains("-")) {
-      // negatNum = BigInteger.valueOf(-1);
-      // } // if
     } else {
-      // if (str.contains("-")) {
-      // if (str.indexOf('/') > str.indexOf('-')) {
-      // negatNum = negatNum.negate();
-      // } else {
-      // negatDenom = negatDenom.negate();
-      // } // if-else
-      // } // if
-      this.num = BigInteger.valueOf(Integer.parseInt(str.substring(0, str.indexOf('/'))));
-      this.denom =
-          BigInteger.valueOf(Integer.parseInt(str.substring(str.indexOf('/') + 1, str.length())));
+      int pos = str.indexOf('/');
+      this.num = BigInteger.valueOf(Integer.parseInt(str.substring(0, pos)));
+      this.denom = BigInteger.valueOf(Integer.parseInt(str.substring(pos + 1, str.length())));
     } // if-else
-    // this.num = this.num.multiply(negatNum);
-    // this.denom = this.denom.multiply(negatDenom);
     this.simplify();
   } // BigFraction (str)
 
   /**
    * Build a new fraction based on two integers.
    *
-   * @param numerator the integer value for this.num.
+   * @param numerator   the integer value for this.num.
    * @param denominator the integer value for this.denom.
    */
   public BigFraction(int numerator, int denominator) {
@@ -164,7 +139,6 @@ public class BigFraction {
     return this.num.doubleValue() / this.denom.doubleValue();
   } // doubleValue()
 
-
   /**
    * Add another faction to this fraction.
    *
@@ -186,7 +160,6 @@ public class BigFraction {
       return new BigFraction(resultNumerator, resultDenominator).simplify();
     } // if-else
   } // add(BigFraction)
-
 
   /**
    *
@@ -239,10 +212,11 @@ public class BigFraction {
    * @return a BigFraction variable as the result of multiplication.
    */
   public BigFraction multiply(BigFraction fraction) {
-    BigFraction result =
-        new BigFraction(this.num.multiply(fraction.num), this.denom.multiply(fraction.denom));
+    BigInteger newNum = this.num.multiply(fraction.num);
+    BigInteger newDenom = this.denom.multiply(fraction.denom);
+    BigFraction result = new BigFraction(newNum, newDenom);
     return result.simplify();
-  }// multiply
+  } // multiply
 
   /**
    * Return the fractional value (smaller than 1) of this fraction.
@@ -257,27 +231,34 @@ public class BigFraction {
   /**
    * Substract one fraction from the other fraction.
    *
-   * @return a Bigfraction as a result of the object's value minus the input value of val
+   * @param subtractVal the value to be subtracted from this.
+   * @return a Bigfraction as a result of the object's value minus the input value
+   *         of val
    */
   public BigFraction subtract(BigFraction subtractVal) {
     BigInteger resultNum;
     BigInteger resultDenom;
     resultDenom = this.denom.multiply(subtractVal.denom);
-    resultNum =
-        (this.num.multiply(subtractVal.denom)).subtract(this.denom.multiply(subtractVal.num));
+    BigInteger first = this.num.multiply(subtractVal.denom);
+    resultNum = first.subtract(this.denom.multiply(subtractVal.num));
     return new BigFraction(resultNum, resultDenom).simplify();
   } // subtract(val)
 
   /**
    * Divide the current fraction by the other.
    *
-   * @param DivideVal the value to divide.
+   * @param divideVal the value to divide.
    * @return a big fraction as the the result of division.
    */
-  public BigFraction divide(BigFraction DivideVal) {
-    BigFraction reciprocal = new BigFraction(DivideVal.denominator(), DivideVal.numerator());
+  public BigFraction divide(BigFraction divideVal) {
+    BigInteger newDenom = divideVal.denominator();
+    BigInteger newNum = divideVal.numerator();
+    BigFraction reciprocal = new BigFraction(newDenom, newNum);
+    if (newDenom.intValue() < 0) {
+      reciprocal = new BigFraction(newNum.negate(), newDenom.negate());
+    } // if
     return this.multiply(reciprocal).simplify();
-  }// divide()
+  } // divide()
 
   /**
    * simplify a BigFraction to the simplest form.

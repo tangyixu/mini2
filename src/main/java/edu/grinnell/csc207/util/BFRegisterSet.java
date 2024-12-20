@@ -1,10 +1,9 @@
+
 package edu.grinnell.csc207.util;
 
-import java.math.BigInteger;
-import edu.grinnell.csc207.util.BigFraction;
-
 /**
- * A class designed for storing and retrieving values stored during computations.
+ * A class designed for storing and retrieving values stored during
+ * computations.
  *
  * @author Tiffany Tang
  *
@@ -40,12 +39,12 @@ public class BFRegisterSet {
    */
   public BigFraction get(char register) {
     return this.storage[(int) register - 97];
-  }// get(register)
+  } // get(register)
 
   /**
    * Determine if the incoming char is a valid register.
-   * 
-   * @param ch the char to be determined.
+   *
+   * @param str the char to be determined.
    * @return true if it exists in the set, return false otherwise.
    */
   public boolean isValidReg(String str) {
